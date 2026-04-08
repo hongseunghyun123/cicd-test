@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        strDockerImage="fgh0830/cicd-test"
+        strDockerImage = "fgh0830/cicd-test"
     }
+
     stages {
         stage('Github Pull') {
             steps {
@@ -11,10 +12,10 @@ pipeline {
             }
         }
 
-        stage('Doker image Build') {
+        stage('Docker image Build') {
             steps {
                 script {
-                    oDockImage = docker.build(strDokerImage"-f Dockerfile .")
+                    oDockImage = docker.build(strDockerImage, "-f Dockerfile .")
                 }
             }
         }
