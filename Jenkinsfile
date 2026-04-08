@@ -14,9 +14,15 @@ pipeline {
                 sh 'echo "git clone end" > cicd_test.txt'
             }
         }
+
         stage('Deploy Server') {
-            sshagent(credentials:['Deploy-Privatekey']){
-                sh "scp -o StrictHostKeyChecking=no index.html ubuntu@3.38.110.136:/var/www/html/" 
+            steps {
+                sshagent(credentials: ['Deploy-Privatekey']) {
+                    sh '''
+                        scp -o StrictHostKeyChecking=no index.html ubuntu@3.38.110.136:/home/ubuntu/
+                        ssh -o StrictHostKeyChecking=no ubuntu@3.38.110.136 "sudo mv /home/ubuntu/index.html /var/www/html/index.html"
+                    '''
+                }
             }
         }
     }
