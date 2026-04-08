@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        strDockerImage="fgh0830/cicd-test"
+    }
     stages {
         stage('Github Pull') {
             steps {
@@ -8,10 +11,11 @@ pipeline {
             }
         }
 
-        stage('Git clone end') {
+        stage('Doker image Build') {
             steps {
-                sh 'touch cicd_test.txt'
-                sh 'echo "git clone end" > cicd_test.txt'
+                script {
+                    oDockImage = docker.build(strDokerImage"-f Dockerfile .")
+                }
             }
         }
 
